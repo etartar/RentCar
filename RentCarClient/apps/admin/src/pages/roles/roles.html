@@ -1,0 +1,13 @@
+<app-grid
+  endpoint="/rent/odata/roles"
+  deleteEndpoint="/rent/roles"
+  addUrl="/roles/add"
+  editUrl="/roles/edit"
+  detailUrl="/roles/detail"
+  [breadcrumbs]="breadcrumbs()"
+  pageTitle="Roller"
+  captionTitle="Rol Listesi"
+  [showIndex]="true"
+>
+  <flexi-grid-column field="name" title="Rol Adı" />
+</app-grid>

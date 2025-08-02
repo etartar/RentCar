@@ -1,0 +1,25 @@
+﻿using RentCarServer.Domain.Abstractions;
+using RentCarServer.Domain.Roles;
+
+namespace RentCarServer.Application.Features.Roles;
+
+public static class RoleExtensions
+{
+    public static IQueryable<RoleDto> MapTo(this IQueryable<EntityWithAuditDto<Role>> entity)
+    {
+        return entity
+            .Select(s => new RoleDto
+            {
+                Id = s.Entity.Id,
+                Name = s.Entity.Name.Value,
+                IsActive = s.Entity.IsActive,
+                CreatedAt = s.Entity.CreatedAt,
+                CreatedBy = s.Entity.CreatedBy,
+                UpdatedAt = s.Entity.UpdatedAt,
+                UpdatedBy = s.Entity.UpdatedBy == null ? null : s.Entity.UpdatedBy.Value,
+                CreatedFullName = s.CreatedUser.FullName.Value,
+                UpdatedFullName = s.UpdatedUser == null ? null : s.UpdatedUser.FullName.Value,
+            })
+            .AsQueryable();
+    }
+}
