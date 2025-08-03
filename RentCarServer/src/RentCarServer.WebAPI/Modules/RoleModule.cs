@@ -3,6 +3,7 @@ using RentCarServer.Application.Features.Roles.CreateRole;
 using RentCarServer.Application.Features.Roles.DeleteRole;
 using RentCarServer.Application.Features.Roles.GetRole;
 using RentCarServer.Application.Features.Roles.UpdateRole;
+using RentCarServer.Application.Features.Roles.UpdateRolePermission;
 using TS.MediatR;
 using TS.Result;
 
@@ -39,6 +40,16 @@ public static class RoleModule
             .Produces<Result<string>>();
 
         app.MapPut(string.Empty, async (UpdateRoleCommand request, ISender mediator, CancellationToken cancellationToken) =>
+        {
+            var result = await mediator.Send(request, cancellationToken);
+
+            return result.IsSuccessful
+                ? Results.Ok(result)
+                : Results.BadRequest(result);
+        })
+            .Produces<Result<string>>();
+
+        app.MapPut("update-permissions", async (UpdateRolePermissionCommand request, ISender mediator, CancellationToken cancellationToken) =>
         {
             var result = await mediator.Send(request, cancellationToken);
 

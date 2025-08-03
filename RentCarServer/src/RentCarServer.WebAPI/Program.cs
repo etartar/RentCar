@@ -125,6 +125,10 @@ app.MapBranchEndPoint();
 
 app.MapRoleEndPoint();
 
+app.MapPermissionEndPoint();
+
 //await app.CreateFirstUser();
+
+await app.CleanRemovedPermissionsFromRoleAsync();
 
 app.Run();

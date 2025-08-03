@@ -2,11 +2,13 @@ import { ChangeDetectionStrategy, Component, signal, ViewEncapsulation } from '@
 import Grid from '../../components/grid/grid';
 import { FlexiGridModule } from 'flexi-grid';
 import { BreadcrumbModel } from '../../services/breadcrumb';
+import { RouterLink } from '@angular/router';
 
 @Component({
   imports: [
     Grid,
     FlexiGridModule,
+    RouterLink
   ],
   templateUrl: './roles.html',
   encapsulation: ViewEncapsulation.None,

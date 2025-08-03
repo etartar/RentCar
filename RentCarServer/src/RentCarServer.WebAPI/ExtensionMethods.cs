@@ -1,4 +1,5 @@
 ﻿using GenericRepository;
+using RentCarServer.Application.Services;
 using RentCarServer.Domain.Users;
 using RentCarServer.Domain.Users.ValueObjects;
 
@@ -28,5 +29,13 @@ public static class ExtensionMethods
 
             await unitOfWork.SaveChangesAsync();
         }
+    }
+
+    public static async Task CleanRemovedPermissionsFromRoleAsync(this IApplicationBuilder app)
+    {
+        using var scope = app.ApplicationServices.CreateScope();
+        var permissionClenaerService = scope.ServiceProvider.GetRequiredService<PermissionClenaerService>();
+
+        await permissionClenaerService.CleanRemovedPermissionsFromRolesAsync();
     }
 }

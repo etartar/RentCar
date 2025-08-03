@@ -1,0 +1,17 @@
+<title>RentCar | İzinler</title>
+
+<div class="d-flex justify-content-end">    
+    <button class="btn btn-primary mb-2" (click)="update()">Güncelle</button>
+</div>
+
+<flexi-treeview
+    [data]="data()"
+    language="tr"
+    [loading]="loading()"
+    [treeviewTitle]="treeviewTitle()"
+    (onRefresh)="result.reload()"
+    [showDeleteButton]="false"
+    [showEditButton]="false"
+    [showCheckbox]="true"
+    (onSelected)="onSelected($event)">
+</flexi-treeview>

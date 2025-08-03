@@ -11,5 +11,17 @@ internal sealed class RoleConfiguration : IEntityTypeConfiguration<Role>
         builder.HasKey(x => x.Id);
 
         builder.OwnsOne(x => x.Name);
+
+        builder.OwnsMany(x => x.Permissions, permissions =>
+        {
+            permissions.ToTable("Permissions");
+        });
+
+        //builder.OwnsMany(x => x.Permissions, permissions =>
+        //{
+        //    permissions.WithOwner().HasForeignKey("RoleId");
+        //    permissions.Property(p => p.Value).HasColumnName("Permission").IsRequired();
+        //    permissions.HasKey("RoleId", "Value");
+        //});
     }
 }

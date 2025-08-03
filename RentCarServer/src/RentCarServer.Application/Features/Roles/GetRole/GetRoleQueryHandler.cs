@@ -11,7 +11,7 @@ internal sealed class GetRoleQueryHandler(IRoleRepository roleRepository) : IReq
     {
         var role = await roleRepository
             .GetAllWithAudit()
-            .MapTo()
+            .MapToGet()
             .Where(x => x.Id == request.Id)
             .FirstOrDefaultAsync(cancellationToken);
 

@@ -53,7 +53,10 @@
     <flexi-grid-column field="updatedFullName" title="Güncelleyen" />
   }
 
-  <ng-template flexiGridColumnCommandTemplate let-item>
+  <ng-template flexiGridColumnCommandTemplate let-item>    
+    @if(columnCommandTemplateRef() !== undefined){
+      <ng-container *ngTemplateOutlet="columnCommandTemplateRef()!; context:{ $implicit: item }"></ng-container>
+    }
     <flexi-button
       btnColor="info"
       btnIcon="zoom_in"
@@ -78,8 +81,5 @@
       flexiTooltip
       (click)="delete(item.id)"
     />
-    @if(columnCommandTemplateRef() !== undefined){
-      <ng-container *ngTemplateOutlet="columnCommandTemplateRef()!; context:{ $implicit: item }"></ng-container>
-    }
   </ng-template>
 </flexi-grid>
