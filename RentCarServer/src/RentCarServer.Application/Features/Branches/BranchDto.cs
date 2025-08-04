@@ -7,4 +7,5 @@ public sealed class BranchDto : EntityDto
 {
     public string Name { get; set; } = default!;
     public Address Address { get; set; } = default!;
+    public Contact Contact { get; set; } = default!;
 }

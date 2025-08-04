@@ -21,6 +21,7 @@ public sealed class UpdateBranchCommandHandler(IBranchRepository branchRepositor
 
         branch.SetName(name);
         branch.SetAddress(request.Address);
+        branch.SetContact(request.Contact);
         branch.SetStatus(request.IsActive);
 
         branchRepository.Update(branch);

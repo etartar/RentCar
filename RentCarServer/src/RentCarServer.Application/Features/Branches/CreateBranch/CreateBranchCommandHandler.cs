@@ -19,7 +19,7 @@ public sealed class CreateBranchCommandHandler(IBranchRepository branchRepositor
 
         Name name = new Name(request.Name);
 
-        Branch branch = new Branch(name, request.Address, request.IsActive);
+        Branch branch = new Branch(name, request.Address, request.Contact, request.IsActive);
 
         await branchRepository.AddAsync(branch, cancellationToken);
 

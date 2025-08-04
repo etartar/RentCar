@@ -13,6 +13,7 @@ public static class BranchExtensions
                 Id = s.Entity.Id,
                 Name = s.Entity.Name.Value,
                 Address = s.Entity.Address,
+                Contact = s.Entity.Contact,
                 IsActive = s.Entity.IsActive,
                 CreatedAt = s.Entity.CreatedAt,
                 CreatedBy = s.Entity.CreatedBy,

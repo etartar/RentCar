@@ -1,9 +1,11 @@
 import { AddressModel } from "./address.model";
+import { ContactModel } from "./contact.model";
 import { EntityModel } from "./entity.model";
 
 export interface BranchModel extends EntityModel{
     name: string;
     address: AddressModel;
+    contact: ContactModel;
 }
 
 export const initialBranch: BranchModel = {
@@ -12,7 +14,9 @@ export const initialBranch: BranchModel = {
   address: {
     city: '',
     district: '',
-    fullAddress: '',
+    fullAddress: ''
+  },
+  contact: {
     email: '',
     phoneNumber1: '',
     phoneNumber2: ''

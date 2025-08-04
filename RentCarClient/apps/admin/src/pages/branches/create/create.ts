@@ -1,11 +1,13 @@
 import { NgClass } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal, resource, signal, ViewEncapsulation } from '@angular/core';
+import { httpResource } from '@angular/common/http';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, linkedSignal, resource, signal, ViewEncapsulation } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Blank from 'apps/admin/src/components/blank/blank';
 import { BranchModel, initialBranch } from 'apps/admin/src/models/branch.model';
 import { BreadcrumbModel, BreadcrumbService } from 'apps/admin/src/services/breadcrumb';
 import { HttpService } from 'apps/admin/src/services/http-service';
+import { FlexiSelectModule } from 'flexi-select';
 import { FlexiToastService } from 'flexi-toast';
 import { FormValidateDirective } from 'form-validate-angular';
 import { NgxMaskDirective } from 'ngx-mask';
@@ -17,7 +19,8 @@ import { lastValueFrom } from 'rxjs';
     FormsModule,
     FormValidateDirective,
     NgClass,
-    NgxMaskDirective
+    NgxMaskDirective,
+    FlexiSelectModule
   ],
   templateUrl: './create.html',
   encapsulation: ViewEncapsulation.None,
@@ -56,6 +59,11 @@ export default class Create {
   readonly data = linkedSignal(() => this.result.value() ?? {...initialBranch});
   readonly loading = linkedSignal(() => this.result.isLoading());
 
+  readonly cityResult = httpResource<any>(() => "/il-ilce.json");
+  readonly cities = computed(() => this.cityResult.value() ?? []);
+  readonly cityLoading = computed(() => this.cityResult.isLoading());
+  readonly districts = signal<any[]>([]);
+
   readonly #breadcrum = inject(BreadcrumbService);
   readonly #activated = inject(ActivatedRoute);
   readonly #http = inject(HttpService);
@@ -75,6 +83,12 @@ export default class Create {
         }]);
 
         this.#breadcrum.reset(this.breadcrumbs());
+      }
+    });
+
+    effect(() => {
+      if (this.data().address.city){
+        this.getDistricts();
       }
     });
   }
@@ -104,5 +118,11 @@ export default class Create {
       ...prev,
       isActive: status
     }));
+  }
+
+  getDistricts(){
+    const city = this.cities().find((i: { il_adi: string; }) => i.il_adi == this.data().address.city);
+
+    this.districts.set(city.ilceler);
   }
 }

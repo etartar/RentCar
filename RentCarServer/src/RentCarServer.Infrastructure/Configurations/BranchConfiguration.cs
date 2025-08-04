@@ -14,6 +14,8 @@ internal sealed class BranchConfiguration : IEntityTypeConfiguration<Branch>
 
         builder.OwnsOne(b => b.Address);
 
+        builder.OwnsOne(b => b.Contact);
+
         /*builder.OwnsOne(b => b.Address, address =>
         {
             address.Property(a => a.City).HasMaxLength(50).IsRequired();

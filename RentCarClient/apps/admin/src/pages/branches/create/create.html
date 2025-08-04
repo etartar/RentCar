@@ -40,24 +40,30 @@
           <div class="card-body">
             <div class="form-group">
               <label>Şehir *</label>
-              <input
-                type="text"
-                class="form-control"
+              <flexi-select
+                [data]="cities()"
+                [loading]="cityLoading()"
+                label="il_adi"
+                value="il_adi"
                 [(ngModel)]="data().address.city"
                 name="city"
-                required
-              />
+                [required]="true"
+                language="tr"
+                (ngModelChange)="getDistricts()"
+                />
               <div class="invalid-feedback">Geçerli bir şehir seçiniz.</div>
             </div>
             <div class="form-group mt-2">
               <label>İlçe *</label>
-              <input
-                type="text"
-                class="form-control"
+              <flexi-select
+                [data]="districts()"
+                label="ilce_adi"
+                value="ilce_adi"
                 [(ngModel)]="data().address.district"
                 name="district"
-                required
-              />
+                [required]="true"
+                language="tr"
+                />
               <div class="invalid-feedback">Geçerli bir ilçe seçiniz.</div>
             </div>
             <div class="form-group mt-2">
@@ -73,12 +79,24 @@
                 Geçerli bir açık adres giriniz.
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12 col-12">
+        <div class="admin-card">
+          <div class="card-header">
+            <h6>
+              <i class="bi bi-info-circle text-primary me-2"></i>İLetişim Bilgileri
+            </h6>
+          </div>
+          <div class="card-body">            
             <div class="form-group mt-2">
               <label>Telefon 1 *</label>
               <input
                 type="text"
                 class="form-control"
-                [(ngModel)]="data().address.phoneNumber1"
+                [(ngModel)]="data().contact.phoneNumber1"
                 name="phoneNumber1"
                 prefix="+90 "
                 mask="(000) 000 0000"
@@ -93,7 +111,7 @@
               <input
                 type="text"
                 class="form-control"
-                [(ngModel)]="data().address.phoneNumber2"
+                [(ngModel)]="data().contact.phoneNumber2"
                 name="phoneNumber2"
                 prefix="+90 "
                 mask="(000) 000 0000"
@@ -104,7 +122,7 @@
               <input
                 type="email"
                 class="form-control"
-                [(ngModel)]="data().address.email"
+                [(ngModel)]="data().contact.email"
                 name="email"
               />
             </div>
