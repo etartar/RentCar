@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   ElementRef,
   HostListener,
   inject,
@@ -14,6 +15,7 @@ import { NavigationModel, navigations } from '../../navigation';
 import { NgClass } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import Breadcrumb from './breadcrumb/breadcrumb';
+import { Common } from '../../services/common';
 
 @Component({
   imports: [
@@ -31,9 +33,12 @@ export default class Layouts implements OnInit, OnDestroy {
   private resizeTimer: any;
   readonly navigations = signal<NavigationModel[]>(navigations);
 
+  readonly decode = computed(() => this.#common.decode());
+
   readonly #elementRef = inject(ElementRef);
   readonly #renderer = inject(Renderer2);
   readonly #router = inject(Router);
+  readonly #common = inject(Common);
 
   ngOnInit(): void {
     this.initializeSidebar();
@@ -260,5 +265,9 @@ export default class Layouts implements OnInit, OnDestroy {
   public showNotification(message: string): void {
     // Notification logic can be implemented here
     console.log('Notification:', message);
+  }
+
+  checkPermission(permission: string){
+    return this.#common.checkPermission(permission);
   }
 }

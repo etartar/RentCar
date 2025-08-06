@@ -7,6 +7,12 @@ import { FlexiToastService } from 'flexi-toast';
 import { HttpService } from '../../services/http-service';
 import { BreadcrumbModel, BreadcrumbService } from '../../services/breadcrumb';
 import { NgTemplateOutlet } from '@angular/common';
+import { Common } from '../../services/common';
+
+export interface btnOptions{
+  url: string;
+  permission: string;
+}
 
 @Component({
   selector: 'app-grid',
@@ -24,10 +30,10 @@ export default class Grid implements AfterViewInit {
   readonly captionTitle = input.required<string>();
   readonly endpoint = input.required<string>();
   readonly showAudit = input<boolean>(true);
-  readonly addUrl = input.required<string>()
-  readonly editUrl = input.required<string>();
-  readonly detailUrl = input.required<string>();
-  readonly deleteEndpoint = input.required<string>();
+  readonly addOptions = input.required<btnOptions>()
+  readonly editOptions = input.required<btnOptions>();
+  readonly detailOptions = input.required<btnOptions>();
+  readonly deleteOptions = input.required<btnOptions>();
   readonly breadcrumbs = input.required<BreadcrumbModel[]>();
   readonly commandColumnWidth = input<string>("150px");
   readonly showIndex = input<boolean>(false);
@@ -51,7 +57,8 @@ export default class Grid implements AfterViewInit {
   readonly #grid = inject(FlexiGridService);
   readonly #http = inject(HttpService);
   readonly #toast = inject(FlexiToastService);
-  readonly #breadcrum = inject(BreadcrumbService);
+  readonly #breadcrum = inject(BreadcrumbService);  
+  readonly #common = inject(Common);
 
   ngAfterViewInit(): void {
     this.#breadcrum.reset(this.breadcrumbs());
@@ -64,11 +71,15 @@ export default class Grid implements AfterViewInit {
   delete(id: string){
     this.#toast.showSwal("Sil?", "Bu kaydı silmek istiyor musunuz?", "Sil", () => {
       this.loading.set(true);
-      this.#http.delete<string>(`${this.deleteEndpoint()}/${id}`, res => {
+      this.#http.delete<string>(`${this.deleteOptions().url}/${id}`, res => {
         this.#toast.showToast("Başarılı", res, "info");
         this.result.reload();
         this.loading.set(false);
       }, () => this.loading.set(false));
     });
+  }
+
+  checkPermission(permission: string){
+    return this.#common.checkPermission(permission);
   }
 }

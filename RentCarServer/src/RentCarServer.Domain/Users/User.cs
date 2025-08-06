@@ -14,7 +14,9 @@ public sealed class User : Entity
         LastName lastName,
         Email email,
         UserName userName,
-        Password password) : this()
+        Password password,
+        IdentityId branchId,
+        IdentityId roleId) : this()
     {
         FirstName = firstName;
         LastName = lastName;
@@ -24,6 +26,8 @@ public sealed class User : Entity
         SetPassword(password);
         IsForgotPasswordCompleted = new(true);
         SetTFAStatus(new(false));
+        SetBranchId(branchId);
+        SetRoleId(roleId);
     }
 
     public FirstName FirstName { get; private set; } = default!;
@@ -40,6 +44,8 @@ public sealed class User : Entity
     public TFAConfirmCode? TFAConfirmCode { get; private set; } = default!;
     public TFAExpiresDate? TFAExpiresDate { get; private set; } = default!;
     public TFAIsCompleted? TFAIsCompleted { get; private set; } = default!;
+    public IdentityId BranchId { get; private set; } = default!;
+    public IdentityId RoleId { get; private set; } = default!;
 
     #region Behaviors
 
@@ -82,6 +88,16 @@ public sealed class User : Entity
         TFAConfirmCode = new(confirmCode);
         TFAExpiresDate = new(expires);
         TFAIsCompleted = new(false);
+    }
+
+    public void SetBranchId(IdentityId branchId)
+    {
+        BranchId = branchId;
+    }
+
+    public void SetRoleId(IdentityId roleId)
+    {
+        RoleId = roleId;
     }
 
     #endregion

@@ -9,6 +9,8 @@ public sealed class PermissionService
     {
         var permissions = new HashSet<string>();
 
+        permissions.Add("dashboard:view");
+
         var assembly = Assembly.GetExecutingAssembly();
 
         var types = assembly.GetTypes();

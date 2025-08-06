@@ -15,27 +15,29 @@
   <div class="sidebar-content">
     <ul class="sidebar-menu">
         @for (nav of navigations(); track nav.title){
-            @if (!nav.haveSubNav) {
-                <li class="menu-item">
-                    <a [routerLink]="nav.url" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="menu-link">
-                        <i class="bi " [ngClass]="nav.icon"></i>
-                        <span class="menu-text">{{ nav.title }}</span>
-                    </a>
-                </li>
-            } @else {
-                <li class="menu-item">
-                    <a href="javascript:;" class="menu-link">
-                        <i class="bi " [ngClass]="nav.icon"></i>
-                        <span class="menu-text">{{ nav.title }}</span>
-                        <i class="bi bi-chevron-right menu-arrow"></i>
-                    </a>
-                    <ul class="submenu">
-                        @for (subNav of nav.subNavs; track subNav.title){
-                            <li><a [routerLink]="subNav.url">{{ subNav.title }}</a></li>
-                        }
-                    </ul>
-                </li>
-            }
+          @if (!nav.haveSubNav && checkPermission(nav.permission)) {
+              <li class="menu-item">
+                  <a [routerLink]="nav.url" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="menu-link">
+                      <i class="bi " [ngClass]="nav.icon"></i>
+                      <span class="menu-text">{{ nav.title }}</span>
+                  </a>
+              </li>
+          } @else if(checkPermission(nav.permission)) {
+            <li class="menu-item">
+              <a href="javascript:;" class="menu-link">
+                  <i class="bi " [ngClass]="nav.icon"></i>
+                  <span class="menu-text">{{ nav.title }}</span>
+                  <i class="bi bi-chevron-right menu-arrow"></i>
+              </a>
+              <ul class="submenu">
+                  @for (subNav of nav.subNavs; track subNav.title){
+                    @if (checkPermission(subNav.permission)){
+                      <li><a [routerLink]="subNav.url">{{ subNav.title }}</a></li>
+                    }
+                  }
+              </ul>
+            </li>
+          }
         }
     </ul>
   </div>
@@ -49,8 +51,8 @@
         />
       </div>
       <div class="user-details">
-        <span class="user-name">Admin User</span>
-        <span class="user-role">Süper Admin</span>
+        <span class="user-name">{{ decode().fullName }}</span>
+        <span class="user-role">{{ decode().branch }}</span>
       </div>
     </div>
   </div>
@@ -134,7 +136,7 @@
               alt="Profile"
               class="profile-avatar"
             />
-            <span class="layout-profile-name">Admin User</span>
+            <span class="layout-profile-name">{{ decode().fullName }}</span>
             <i class="bi bi-chevron-down"></i>
           </button>
           <ul class="dropdown-menu profile-menu">
@@ -145,9 +147,9 @@
                   alt="Profile"
                 />
                 <div>
-                  <h6>Admin User</h6>
-                  <p>adminrentcar.com</p>
-                  <span class="role-badge">Süper Admin</span>
+                  <h6>{{ decode().fullName }}</h6>
+                  <p>{{ decode().email }}</p>
+                  <span class="role-badge">{{ decode().role }}</span>
                 </div>
               </div>
             </li>
