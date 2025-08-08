@@ -50,7 +50,7 @@ public static class ExtensionMethods
             IdentityId branchId = branch.Id;
             IdentityId roleId = role.Id;
 
-            var user = new User(firstName, lastName, email, userName, password, branchId, roleId);
+            var user = new User(firstName, lastName, email, userName, password, branchId, roleId, true);
 
             //user.SetCreatedBy();
 

@@ -1,7 +1,7 @@
-﻿using GenericRepository;
+﻿using RentCarServer.Domain.Abstractions;
 
 namespace RentCarServer.Domain.Users;
 
-public interface IUserRepostiory : IRepository<User>
+public interface IUserRepostiory : IAuditableRepository<User>
 {
 }

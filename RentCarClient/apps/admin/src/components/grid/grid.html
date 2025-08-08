@@ -67,7 +67,7 @@
         title="Detay"
         btnSize="small"
         flexiTooltip
-        [routerLink]="[this.detailOptions().url]"
+        [routerLink]="[this.detailOptions().url ,item.id]"
       />
     }
 
@@ -78,7 +78,7 @@
         title="Güncelle"
         btnSize="small"
         flexiTooltip
-        [routerLink]="[this.editOptions().url]"
+        [routerLink]="[this.editOptions().url ,item.id]"
       />
     }
 

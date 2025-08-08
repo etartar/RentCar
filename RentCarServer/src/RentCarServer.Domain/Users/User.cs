@@ -16,7 +16,8 @@ public sealed class User : Entity
         UserName userName,
         Password password,
         IdentityId branchId,
-        IdentityId roleId) : this()
+        IdentityId roleId,
+        bool isActive) : this()
     {
         FirstName = firstName;
         LastName = lastName;
@@ -28,6 +29,7 @@ public sealed class User : Entity
         SetTFAStatus(new(false));
         SetBranchId(branchId);
         SetRoleId(roleId);
+        SetStatus(isActive);
     }
 
     public FirstName FirstName { get; private set; } = default!;
@@ -49,6 +51,36 @@ public sealed class User : Entity
 
     #region Behaviors
 
+    public void SetFirstName(FirstName firstName)
+    {
+        FirstName = firstName;
+    }
+
+    public void SetLastName(LastName lastName)
+    {
+        LastName = lastName;
+    }
+
+    public void SetFullName()
+    {
+        FullName = new FullName(FirstName.Value + " " + LastName.Value + " (" + Email.Value + ")");
+    }
+
+    public void SetEmail(Email email)
+    {
+        Email = email;
+    }
+
+    public void SetUserName(UserName userName)
+    {
+        UserName = userName;
+    }
+
+    public void SetPassword(Password newPassword)
+    {
+        Password = newPassword;
+    }
+
     public bool VerifyPasswordHash(string password)
     {
         using var hmac = new System.Security.Cryptography.HMACSHA512(Password.PasswordSalt);
@@ -61,11 +93,6 @@ public sealed class User : Entity
         ForgotPasswordCode = new ForgotPasswordCode(Guid.CreateVersion7());
         ForgotPasswordCreatedDate = new ForgotPasswordCreatedDate(DateTimeOffset.UtcNow);
         IsForgotPasswordCompleted = new IsForgotPasswordCompleted(false);
-    }
-
-    public void SetPassword(Password newPassword)
-    {
-        Password = newPassword;
     }
 
     public void SetTFAStatus(TFAStatus status)
