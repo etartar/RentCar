@@ -1,24 +1,24 @@
 import { ChangeDetectionStrategy, Component, inject, signal, ViewEncapsulation } from '@angular/core';
 import Grid from '../../components/grid/grid';
 import { FlexiGridModule } from 'flexi-grid';
-import { Common } from '../../services/common';
 import { BreadcrumbModel } from '../../services/breadcrumb';
+import { Common } from '../../services/common';
 
 @Component({
   imports: [
     Grid,
     FlexiGridModule
   ],
-  templateUrl: './categories.html',
+  templateUrl: './extras.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export default class Categories {
+export default class Extras {
   readonly breadcrumbs = signal<BreadcrumbModel[]>([
     {
-      title: 'Kategoriler',
-      icon: 'bi-tags',
-      url: '/categories',
+      title: 'Ekstralar',
+      icon: 'bi-plus-square',
+      url: '/extras',
       isActive: true
     }
   ]);

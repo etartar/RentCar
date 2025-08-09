@@ -4,6 +4,7 @@ using RentCarServer.Application.Services;
 using RentCarServer.Domain.Abstractions;
 using RentCarServer.Domain.Branches;
 using RentCarServer.Domain.Categories;
+using RentCarServer.Domain.Extras;
 using RentCarServer.Domain.LoginTokens;
 using RentCarServer.Domain.ProtectionPackages;
 using RentCarServer.Domain.Roles;
@@ -28,6 +29,7 @@ internal sealed class ApplicationDbContext : DbContext, IUnitOfWork
     public DbSet<Role> Roles { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<ProtectionPackage> ProtectionPackages { get; set; }
+    public DbSet<Extra> Extras { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

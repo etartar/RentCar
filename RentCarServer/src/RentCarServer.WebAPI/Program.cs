@@ -133,6 +133,8 @@ app.MapCategoryEndPoint();
 
 app.MapProtectionPackageEndPoint();
 
+app.MapExtraEndPoint();
+
 //await app.CreateFirstUser();
 
 await app.CleanRemovedPermissionsFromRoleAsync();

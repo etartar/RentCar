@@ -43,5 +43,11 @@ export const navigations : NavigationModel[] = [
         url: '/protection-packages',
         icon: 'bi-shield-check',
         permission: 'protection_package:view'
+    },
+    {
+        title: 'Ekstralar',
+        url: '/extras',
+        icon: 'bi-plus-square',
+        permission: 'extra:view'
     }
 ];

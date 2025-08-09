@@ -23,6 +23,7 @@ public sealed class ProtectionPackage : Entity, IAggregate
         SetName(name);
         SetPrice(price);
         SetIsRecommended(isRecommended);
+        SetOrderNumber(orderNumber);
         SetCoverages(coverages);
         SetStatus(isActive);
     }
