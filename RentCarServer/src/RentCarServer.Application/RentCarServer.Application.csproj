@@ -19,4 +19,10 @@
     <ProjectReference Include="..\RentCarServer.Domain\RentCarServer.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Categories\DeleteCategory\" />
+    <Folder Include="Features\Categories\GetCategory\" />
+    <Folder Include="Features\Categories\GetAllCategory\" />
+  </ItemGroup>
+
 </Project>

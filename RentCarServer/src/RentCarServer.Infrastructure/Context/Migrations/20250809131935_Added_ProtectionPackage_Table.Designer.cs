@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentCarServer.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using RentCarServer.Infrastructure.Context;
 namespace RentCarServer.Infrastructure.Context.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250809131935_Added_ProtectionPackage_Table")]
+    partial class Added_ProtectionPackage_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -376,24 +379,7 @@ namespace RentCarServer.Infrastructure.Context.Migrations
 
             modelBuilder.Entity("RentCarServer.Domain.ProtectionPackages.ProtectionPackage", b =>
                 {
-                    b.OwnsOne("RentCarServer.Domain.Shared.Name", "Name", b1 =>
-                        {
-                            b1.Property<Guid>("ProtectionPackageId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(MAX)");
-
-                            b1.HasKey("ProtectionPackageId");
-
-                            b1.ToTable("ProtectionPackages");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ProtectionPackageId");
-                        });
-
-                    b.OwnsOne("RentCarServer.Domain.ProtectionPackages.ValueObjects.IsRecommended", "IsRecommended", b1 =>
+                    b.OwnsOne("RentCarServer.Domain.ProtectionPackages.IsRecommended", "IsRecommended", b1 =>
                         {
                             b1.Property<Guid>("ProtectionPackageId")
                                 .HasColumnType("uniqueidentifier");
@@ -409,7 +395,7 @@ namespace RentCarServer.Infrastructure.Context.Migrations
                                 .HasForeignKey("ProtectionPackageId");
                         });
 
-                    b.OwnsOne("RentCarServer.Domain.ProtectionPackages.ValueObjects.Price", "Price", b1 =>
+                    b.OwnsOne("RentCarServer.Domain.ProtectionPackages.Price", "Price", b1 =>
                         {
                             b1.Property<Guid>("ProtectionPackageId")
                                 .HasColumnType("uniqueidentifier");
@@ -425,7 +411,7 @@ namespace RentCarServer.Infrastructure.Context.Migrations
                                 .HasForeignKey("ProtectionPackageId");
                         });
 
-                    b.OwnsMany("RentCarServer.Domain.ProtectionPackages.ValueObjects.ProtectionCoverage", "Coverages", b1 =>
+                    b.OwnsMany("RentCarServer.Domain.ProtectionPackages.ProtectionCoverage", "Coverages", b1 =>
                         {
                             b1.Property<Guid>("ProtectionPackageId")
                                 .HasColumnType("uniqueidentifier");
@@ -448,13 +434,14 @@ namespace RentCarServer.Infrastructure.Context.Migrations
                                 .HasForeignKey("ProtectionPackageId");
                         });
 
-                    b.OwnsOne("RentCarServer.Domain.Shared.OrderNumber", "OrderNumber", b1 =>
+                    b.OwnsOne("RentCarServer.Domain.Shared.Name", "Name", b1 =>
                         {
                             b1.Property<Guid>("ProtectionPackageId")
                                 .HasColumnType("uniqueidentifier");
 
-                            b1.Property<int>("Value")
-                                .HasColumnType("int");
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(MAX)");
 
                             b1.HasKey("ProtectionPackageId");
 
@@ -470,9 +457,6 @@ namespace RentCarServer.Infrastructure.Context.Migrations
                         .IsRequired();
 
                     b.Navigation("Name")
-                        .IsRequired();
-
-                    b.Navigation("OrderNumber")
                         .IsRequired();
 
                     b.Navigation("Price")

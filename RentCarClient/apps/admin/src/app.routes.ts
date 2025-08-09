@@ -37,6 +37,14 @@ export const appRoutes: Route[] = [
             {
                 path: 'users',
                 loadChildren: () => import("./pages/users/user-router")
+            },
+            {
+                path: 'categories',
+                loadChildren: () => import("./pages/categories/category-router")
+            },
+            {
+                path: 'protection-packages',
+                loadChildren: () => import("./pages/protection-packages/protection-packages-router")
             }
         ]
     }

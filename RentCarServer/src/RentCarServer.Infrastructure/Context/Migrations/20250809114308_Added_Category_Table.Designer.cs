@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentCarServer.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using RentCarServer.Infrastructure.Context;
 namespace RentCarServer.Infrastructure.Context.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250809114308_Added_Category_Table")]
+    partial class Added_Category_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,40 +106,6 @@ namespace RentCarServer.Infrastructure.Context.Migrations
                     b.ToTable("LoginTokens");
                 });
 
-            modelBuilder.Entity("RentCarServer.Domain.ProtectionPackages.ProtectionPackage", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTimeOffset?>("DeletedAt")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<Guid?>("DeletedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProtectionPackages", (string)null);
-                });
-
             modelBuilder.Entity("RentCarServer.Domain.Roles.Role", b =>
                 {
                     b.Property<Guid>("Id")
@@ -168,7 +137,7 @@ namespace RentCarServer.Infrastructure.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("RentCarServer.Domain.Users.User", b =>
@@ -371,111 +340,6 @@ namespace RentCarServer.Infrastructure.Context.Migrations
                         .IsRequired();
 
                     b.Navigation("Token")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("RentCarServer.Domain.ProtectionPackages.ProtectionPackage", b =>
-                {
-                    b.OwnsOne("RentCarServer.Domain.Shared.Name", "Name", b1 =>
-                        {
-                            b1.Property<Guid>("ProtectionPackageId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(MAX)");
-
-                            b1.HasKey("ProtectionPackageId");
-
-                            b1.ToTable("ProtectionPackages");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ProtectionPackageId");
-                        });
-
-                    b.OwnsOne("RentCarServer.Domain.ProtectionPackages.ValueObjects.IsRecommended", "IsRecommended", b1 =>
-                        {
-                            b1.Property<Guid>("ProtectionPackageId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<bool>("Value")
-                                .HasColumnType("bit");
-
-                            b1.HasKey("ProtectionPackageId");
-
-                            b1.ToTable("ProtectionPackages");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ProtectionPackageId");
-                        });
-
-                    b.OwnsOne("RentCarServer.Domain.ProtectionPackages.ValueObjects.Price", "Price", b1 =>
-                        {
-                            b1.Property<Guid>("ProtectionPackageId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<decimal>("Value")
-                                .HasColumnType("money");
-
-                            b1.HasKey("ProtectionPackageId");
-
-                            b1.ToTable("ProtectionPackages");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ProtectionPackageId");
-                        });
-
-                    b.OwnsMany("RentCarServer.Domain.ProtectionPackages.ValueObjects.ProtectionCoverage", "Coverages", b1 =>
-                        {
-                            b1.Property<Guid>("ProtectionPackageId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int");
-
-                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
-
-                            b1.Property<string>("Name")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(MAX)");
-
-                            b1.HasKey("ProtectionPackageId", "Id");
-
-                            b1.ToTable("ProtectionPackageCoverages", (string)null);
-
-                            b1.WithOwner()
-                                .HasForeignKey("ProtectionPackageId");
-                        });
-
-                    b.OwnsOne("RentCarServer.Domain.Shared.OrderNumber", "OrderNumber", b1 =>
-                        {
-                            b1.Property<Guid>("ProtectionPackageId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<int>("Value")
-                                .HasColumnType("int");
-
-                            b1.HasKey("ProtectionPackageId");
-
-                            b1.ToTable("ProtectionPackages");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ProtectionPackageId");
-                        });
-
-                    b.Navigation("Coverages");
-
-                    b.Navigation("IsRecommended")
-                        .IsRequired();
-
-                    b.Navigation("Name")
-                        .IsRequired();
-
-                    b.Navigation("OrderNumber")
-                        .IsRequired();
-
-                    b.Navigation("Price")
                         .IsRequired();
                 });
 

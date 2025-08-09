@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using RentCarServer.Application.Services;
 using RentCarServer.Domain.Abstractions;
 using RentCarServer.Domain.Branches;
+using RentCarServer.Domain.Categories;
 using RentCarServer.Domain.LoginTokens;
+using RentCarServer.Domain.ProtectionPackages;
 using RentCarServer.Domain.Roles;
 using RentCarServer.Domain.Users;
 using RentCarServer.Infrastructure.Extensions;
@@ -24,6 +26,8 @@ internal sealed class ApplicationDbContext : DbContext, IUnitOfWork
     public DbSet<LoginToken> LoginTokens { get; set; }
     public DbSet<Branch> Branches { get; set; }
     public DbSet<Role> Roles { get; set; }
+    public DbSet<Category> Categories { get; set; }
+    public DbSet<ProtectionPackage> ProtectionPackages { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -37,7 +41,7 @@ internal sealed class ApplicationDbContext : DbContext, IUnitOfWork
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
         configurationBuilder.Properties<IdentityId>().HaveConversion<IdentityIdValueConverter>();
-        configurationBuilder.Properties<decimal>().HaveColumnType("decimal(18,2)");
+        configurationBuilder.Properties<decimal>().HaveColumnType("money");
         configurationBuilder.Properties<string>().HaveColumnType("nvarchar(MAX)");
 
         base.ConfigureConventions(configurationBuilder);

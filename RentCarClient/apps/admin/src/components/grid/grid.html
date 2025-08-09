@@ -12,6 +12,10 @@
   (dataStateChange)="dataStateChange($event)"
   [commandColumnWidth]="commandColumnWidth()"
   [showIndex]="showIndex()"
+  [sort]="sort()"
+  [filter]="filter()"
+  [reorderable]="reorderable()"
+  (onReorder)="onReorderMethod($event)"
 >
   <ng-template flexiGridCaptionCommandTemplate>
     @if(commandTemplateRef() !== undefined){
